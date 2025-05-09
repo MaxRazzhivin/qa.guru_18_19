@@ -1,24 +1,21 @@
-import os
-
 import allure
+from allure_commons.types import AttachmentType
 import requests
 
-login = os.getenv('USERNAME')
-access_key = os.getenv("ACCESSKEY")
-
-
+# Скриншоты
 def add_screenshot(browser):
     png = browser.driver.get_screenshot_as_png()
-    allure.attach(body=png, 
-                  name='Screenshot', 
-                  attachment_type=allure.attachment_type.PNG)
+    allure.attach(body=png, name='screenshot', attachment_type=AttachmentType.PNG, extension='.png')
 
+def add_logs(browser):
+    log = "".join(f'{text}\n' for text in browser.driver.get_log(log_type='browser'))
+    allure.attach(log, 'browser_logs', AttachmentType.TEXT, '.log')
 
 def add_xml(browser):
     xml_dump = browser.driver.page_source
     allure.attach(body=xml_dump, 
                   name='XML screen', 
-                  attachment_type=allure.attachment_type.XML)
+                  attachment_type=allure.attachment_type.XML, extension='.xml')
 
 
 def add_video(session_id, login, access_key):
