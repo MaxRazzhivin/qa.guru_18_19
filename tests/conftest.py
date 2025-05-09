@@ -7,12 +7,13 @@ from dotenv import load_dotenv
 from utils import attach
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='function', autouse=True)
 def load_env():
     load_dotenv()
 
 @pytest.fixture(scope='function')
 def android_management():
+    load_dotenv()
 
     options = UiAutomator2Options().load_capabilities({
         # Specify device and os_version for testing
