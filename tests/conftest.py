@@ -16,7 +16,9 @@ def load_env():
 
 @pytest.fixture(scope='function')
 def android_management():
-
+    load_dotenv()
+    userName = os.getenv('USERNAME')
+    accessKey = os.getenv("ACCESSKEY")
 
     options = UiAutomator2Options().load_capabilities({
         # Specify device and os_version for testing
@@ -32,8 +34,8 @@ def android_management():
             "sessionName": "BStack third_test",  # Название сессии которое будет отображаться в Browserstack
 
             # Set your access credentials
-            "userName": os.getenv('USERNAME'),  # Ваш логин в Browserstack
-            "accessKey": os.getenv("ACCESSKEY")  # Ваш ключ доступа в Browserstack
+            "userName": userName,  # Ваш логин в Browserstack
+            "accessKey": accessKey  # Ваш ключ доступа в Browserstack
         }
 
         # Add your caps here
