@@ -26,4 +26,4 @@ def test_open_aricle(android_management):
 
     with step('Verify content found'):
         results = browser.all((AppiumBy.ID, "org.wikipedia.alpha:id/page_list_item_title"))
-        results.first.click()
+        results.first.should(have.text('Selene')).click()

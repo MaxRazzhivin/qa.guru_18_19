@@ -1,29 +1,32 @@
+import os
+
 import allure
-from config import config
+import requests
 
-def attach_screenshot(browser):
-    allure.attach(
-        browser.driver.get_screenshot_as_png(),
-        name='screenshot',
-        attachment_type=allure.attachment_type.PNG,
-    )
-
-# логи
-def attach_xml(browser):
-    allure.attach(
-        browser.driver.page_source,
-        name='screen xml dump',
-        attachment_type=allure.attachment_type.XML,
-    )
+login = os.getenv('USERNAME')
+access_key = os.getenv("ACCESSKEY")
 
 
-def attach_bstack_video(session_id):
-    import requests
-    bstack_session = requests.get(
-        f'https://api.browserstack.com/app-automate/sessions/{session_id}.json',
-        auth=(config.bstack_userName, config.bstack_accessKey),
+def add_screenshot(browser):
+    png = browser.driver.get_screenshot_as_png()
+    allure.attach(body=png, 
+                  name='Screenshot', 
+                  attachment_type=allure.attachment_type.PNG)
+
+
+def add_xml(browser):
+    xml_dump = browser.driver.page_source
+    allure.attach(body=xml_dump, 
+                  name='XML screen', 
+                  attachment_type=allure.attachment_type.XML)
+
+
+def add_video(session_id, login, access_key):
+    browserstack_session = requests.get(
+        url=f'https://api.browserstack.com/app-automate/sessions/{session_id}.json',
+        auth=(login, access_key)
     ).json()
-    video_url = bstack_session['automation_session']['video_url']
+    video_url = browserstack_session['automation_session']['video_url']
 
     allure.attach(
         '<html><body>'

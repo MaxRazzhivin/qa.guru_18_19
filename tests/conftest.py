@@ -4,6 +4,8 @@ from selene import browser
 import os
 from selenium import webdriver
 from dotenv import load_dotenv
+from utils import attach
+
 
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
@@ -38,5 +40,11 @@ def android_management():
     browser.config.timeout = float(os.getenv('timeout', '10.0'))
 
     yield
+
+    attach.add_screenshot(browser)
+    attach.add_xml(browser)
+
+    session_id = browser.config.driver.session_id
+    attach.add_video(session_id, os.getenv('USERNAME'), os.getenv('ACCESSKEY'))
 
     browser.quit()
