@@ -1,7 +1,7 @@
 from allure_commons._allure import step
 from selene import browser, have
 
-def test_search():
+def test_search(browser_management):
     browser.open('/')
 
     with step('Type search'):
