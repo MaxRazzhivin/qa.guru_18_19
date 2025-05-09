@@ -11,9 +11,15 @@ from utils import attach
 def load_env():
     load_dotenv()
 
+user = os.getenv('USERNAME')
+password = os.getenv("ACCESSKEY")
 
 @pytest.fixture(scope='function')
 def android_management():
+
+    user = os.getenv('USERNAME')
+    password = os.getenv("ACCESSKEY")
+
     options = UiAutomator2Options().load_capabilities({
         # Specify device and os_version for testing
         "platformName": "android",
@@ -28,15 +34,15 @@ def android_management():
             "sessionName": "BStack third_test",  # Название сессии которое будет отображаться в Browserstack
 
             # Set your access credentials
-            "userName": os.getenv('USERNAME'),  # Ваш логин в Browserstack
-            "accessKey": os.getenv("ACCESSKEY")  # Ваш ключ доступа в Browserstack
+            "userName": user,  # Ваш логин в Browserstack
+            "accessKey": password  # Ваш ключ доступа в Browserstack
         }
 
         # Add your caps here
     })
 
     browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub",
-                              options=options)
+                                             options=options)
     browser.config.timeout = float(os.getenv('timeout', '10.0'))
 
     yield
@@ -52,7 +58,7 @@ def android_management():
 
 @pytest.fixture(scope='function')
 def browser_management():
-    browser.config.base_url= 'https://www.wikipedia.org'
+    browser.config.base_url = 'https://www.wikipedia.org'
 
     browser.config.driver_name = 'chrome'
 
