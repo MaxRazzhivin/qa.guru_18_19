@@ -40,6 +40,9 @@ def android_management():
         # Add your caps here
     })
 
+    print(bstack_userName)
+    print(bstack_accessKey)
+
     browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub",
                                              options=options)
     browser.config.timeout = float(os.getenv('timeout', '10.0'))
