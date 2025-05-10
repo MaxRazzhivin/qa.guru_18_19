@@ -1,2 +1,0 @@
-INFO     root:conftest.py:30 bsuser_StMl8n
-INFO     root:conftest.py:31 2PdYbXSeehJHCLZbHoJg
