@@ -62,9 +62,6 @@ def android_management():
         # Add your caps here
     })
 
-    print(USERNAME)
-    print(PASSWORD)
-
     general_settings(options)
 
     yield
