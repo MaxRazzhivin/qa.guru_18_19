@@ -178,3 +178,5 @@ tests/allure-results/
 allure-report/
 tests/allure-report/
 .env
+allure-report
+allure-results
