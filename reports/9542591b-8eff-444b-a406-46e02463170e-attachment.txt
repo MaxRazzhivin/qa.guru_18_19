@@ -1,0 +1,2 @@
+[32mINFO    [0m root:conftest.py:27 bsuser_StMl8n
+[32mINFO    [0m root:conftest.py:28 2PdYbXSeehJHCLZbHoJg

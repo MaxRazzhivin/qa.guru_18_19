@@ -4,7 +4,6 @@ from selene import browser, have
 
 
 def test_search(android_management):
-
     with step('Type search'):
         search_element = browser.element((AppiumBy.ACCESSIBILITY_ID, "Search Wikipedia"))
         search_element.click()

@@ -22,8 +22,11 @@ def load_env():
     load_dotenv()
 
 def get_creeds():
+    load_dotenv()
     USERNAME = os.getenv('BSTACK_USERNAME')
     PASSWORD = os.getenv('BSTACK_ACCESSKEY')
+    print(USERNAME)
+    print(PASSWORD)
     logging.info(USERNAME)
     logging.info(PASSWORD)
     return USERNAME, PASSWORD
@@ -31,6 +34,7 @@ def get_creeds():
 @pytest.fixture(scope='function')
 def android_management():
     creeds = get_creeds()
+    print(creeds)
     USERNAME = creeds[0]
     PASSWORD = creeds[1]
 
