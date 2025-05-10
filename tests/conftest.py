@@ -13,7 +13,7 @@ def load_env():
     load_dotenv()
 
 load_dotenv()
-bstack_userName = os.getenv('USERNAME')
+bstack_userName = os.getenv('BUSERNAME')
 bstack_accessKey = os.getenv('ACCESSKEY')
 
 @pytest.fixture(scope='function')
