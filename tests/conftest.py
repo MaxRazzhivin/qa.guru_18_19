@@ -1,3 +1,4 @@
+import allure
 import pytest
 from appium.options.android import UiAutomator2Options
 from selene import browser
@@ -10,11 +11,12 @@ from utils import attach
 def load_env():
     load_dotenv()
 
+load_dotenv()
+bstack_userName = os.getenv('USERNAME')
+bstack_accessKey = os.getenv('ACCESSKEY')
+
 @pytest.fixture(scope='function')
 def android_management():
-
-    bstack_userName = os.getenv('USERNAME')
-    bstack_accessKey = os.getenv('ACCESSKEY')
 
     options = UiAutomator2Options().load_capabilities({
         # Specify device and os_version for testing
@@ -49,7 +51,8 @@ def android_management():
     session_id = browser.config.driver.session_id
     attach.add_video(session_id, bstack_userName, bstack_accessKey)
 
-    browser.quit()
+    with allure.step('teardown app session'):
+        browser.quit()
 
 
 @pytest.fixture(scope='function')
