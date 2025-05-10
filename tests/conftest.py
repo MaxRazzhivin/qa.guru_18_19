@@ -1,3 +1,5 @@
+import logging
+
 import allure
 import pytest
 from allure_commons._allure import StepContext
@@ -8,16 +10,29 @@ from appium import webdriver
 from dotenv import load_dotenv
 from utils import attach
 
+
+def general_settings(options):
+    browser.config.driver = webdriver.Remote('http://hub.browserstack.com/wd/hub', options=options)
+    browser.config.driver_options = options
+    browser.config.timeout = float(os.getenv('timeout', '10.0'))
+    browser.config._wait_decorator = support._logging.wait_with(context=StepContext)
+
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
     load_dotenv()
 
-load_dotenv()
-bstack_userName = os.getenv('BUSERNAME')
-bstack_accessKey = os.getenv('ACCESSKEY')
+def get_creeds():
+    USERNAME = os.getenv('BSTACK_USERNAME')
+    PASSWORD = os.getenv('BSTACK_ACCESSKEY')
+    logging.info(USERNAME)
+    logging.info(PASSWORD)
+    return USERNAME, PASSWORD
 
 @pytest.fixture(scope='function')
 def android_management():
+    creeds = get_creeds()
+    USERNAME = creeds[0]
+    PASSWORD = creeds[1]
 
     options = UiAutomator2Options().load_capabilities({
         # Specify device and os_version for testing
@@ -30,24 +45,20 @@ def android_management():
         'bstack:options': {
             "projectName": "First Python project",  # Название проекта которое будет отображаться в Browserstack
             "buildName": "browserstack-build-1",  # Название сборки которое будет отображаться в Browserstack
-            "sessionName": "BStack third_test",  # Название сессии которое будет отображаться в Browserstack
+            "sessionName": "BStack first_test",  # Название сессии которое будет отображаться в Browserstack
 
             # Set your access credentials
-            "userName": bstack_userName,  # Ваш логин в Browserstack
-            "accessKey": bstack_accessKey  # Ваш ключ доступа в Browserstack
+            "userName": USERNAME,  # Ваш логин в Browserstack
+            "accessKey": PASSWORD  # Ваш ключ доступа в Browserstack
         }
 
         # Add your caps here
     })
 
-    print(bstack_userName)
-    print(bstack_accessKey)
+    print(USERNAME)
+    print(PASSWORD)
 
-    browser.config.driver = webdriver.Remote("http://hub.browserstack.com/wd/hub",
-                                             options=options)
-    browser.config.timeout = float(os.getenv('timeout', '10.0'))
-
-    browser.config._wait_decorator = support._logging.wait_with(context=StepContext)
+    general_settings(options)
 
     yield
 
@@ -55,7 +66,7 @@ def android_management():
     attach.add_xml(browser)
 
     session_id = browser.config.driver.session_id
-    attach.add_video(session_id, bstack_userName, bstack_accessKey)
+    attach.add_video(session_id, USERNAME, PASSWORD)
 
     with allure.step('teardown app session'):
         browser.quit()
