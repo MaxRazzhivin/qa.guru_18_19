@@ -1,14 +1,12 @@
 import os
-
 from appium.options.android import UiAutomator2Options
-
 import utils
 from dotenv import load_dotenv
 
 load_dotenv()
 
-USERNAME = os.getenv('BSTACK_USERNAME')
-PASSWORD = os.getenv('BSTACK_ACCESSKEY')
+bstack_userName = os.getenv('bstack_userName')
+bstack_accessKey = os.getenv('bstack_accessKey')
 # context = os.getenv('context', 'bstack')
 # run_on_bstack = os.getenv('run_on_bstack', 'false').lower() == 'true'
 remote_url = os.getenv('remote_url', 'http://127.0.0.1:4723')
@@ -40,8 +38,8 @@ def driver_options():
                 "projectName": "First Python project",  # Название проекта которое будет отображаться в Browserstack
                 "buildName": "browserstack-build-1",  # Название сборки которое будет отображаться в Browserstack
                 "sessionName": "BStack first_test",  # Название сессии которое будет отображаться в Browserstack
-                "userName": USERNAME,  # Ваш логин в Browserstack
-                "accessKey": PASSWORD  # Ваш ключ доступа в Browserstack
+                "userName": bstack_userName,  # Ваш логин в Browserstack
+                "accessKey": bstack_accessKey  # Ваш ключ доступа в Browserstack
             })
 
     return options

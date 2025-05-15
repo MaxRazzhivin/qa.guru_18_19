@@ -38,13 +38,22 @@ def test_open_aricle(android_management):
 
 
 def test_continue_onboarding_screen(android_management):
+
         with step("Push continue on onboarding screen"):
-            skip_button = browser.element((AppiumBy.ID, 'org.wikipedia.alpha:id/fragment_onboarding_forward_button'))
-            skip_button.click()
+            continue_button = browser.element((AppiumBy.ID, 'org.wikipedia.alpha:id/fragment_onboarding_forward_button'))
+            continue_button.click()
+            assert browser.element((AppiumBy.ID, 'org.wikipedia.alpha:id/primaryTextView')).should(have.text('New ways to explore'))
+
         with step('Push continue 2nd time'):
-            skip_button.click()
+            continue_button.click()
+            browser.element((AppiumBy.ID, 'org.wikipedia.alpha:id/primaryTextView')
+                            ).should(have.text('Reading lists with sync'))
         with step('Push continue 3rd time'):
-            skip_button.click()
+            continue_button.click()
+            browser.element((AppiumBy.ID, 'org.wikipedia.alpha:id/primaryTextView')
+                            ).should(have.text('Data & Privacy'))
         with step("Push to start"):
             start_onboarding_button = browser.element((AppiumBy.ID, 'org.wikipedia.alpha:id/fragment_onboarding_done_button'))
             start_onboarding_button.click()
+            browser.element((AppiumBy.ID, 'org.wikipedia.alpha:id/view_card_header_title')
+                            ).should(have.text('Wikipedia games'))
