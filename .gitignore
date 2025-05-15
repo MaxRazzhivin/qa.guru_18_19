@@ -181,3 +181,5 @@ tests/allure-report/
 .env
 allure-report
 allure-results
+reports/
+*.apk
