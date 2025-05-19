@@ -1,12 +1,8 @@
 import os
 from appium.options.android import UiAutomator2Options
 from pydantic_settings import BaseSettings
-
 import utils
 from dotenv import load_dotenv
-
-load_dotenv()
-
 
 class Config(BaseSettings):
     base_url: str = 'https://www.wikipedia.org'
@@ -16,6 +12,8 @@ class Config(BaseSettings):
     window_height: int = 1200
     timeout: float = 3.0
 
+
+load_dotenv()
 config = Config()
 
 bstack_userName = os.getenv('bstack_userName')

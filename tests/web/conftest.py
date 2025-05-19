@@ -1,6 +1,5 @@
 import pytest
 from allure_commons._allure import StepContext
-from pydantic_settings import BaseSettings
 from selene import browser, support
 from config import config
 from utils import attach
