@@ -2,21 +2,8 @@ import pytest
 from allure_commons._allure import StepContext
 from pydantic_settings import BaseSettings
 from selene import browser, support
+from config import config
 from utils import attach
-
-
-class Config(BaseSettings):
-    base_url: str = 'https://www.wikipedia.org'
-    driver_name: str = 'chrome'
-    hold_driver_at_exit: bool = False
-    window_width: int = 1900
-    window_height: int = 1200
-    timeout: float = 3.0
-
-config = Config()
-
-
-
 
 @pytest.fixture(scope='function', autouse=True)
 def browser_management():

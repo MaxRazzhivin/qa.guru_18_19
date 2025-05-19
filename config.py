@@ -1,9 +1,22 @@
 import os
 from appium.options.android import UiAutomator2Options
+from pydantic_settings import BaseSettings
+
 import utils
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
+class Config(BaseSettings):
+    base_url: str = 'https://www.wikipedia.org'
+    driver_name: str = 'chrome'
+    hold_driver_at_exit: bool = False
+    window_width: int = 1900
+    window_height: int = 1200
+    timeout: float = 3.0
+
+config = Config()
 
 bstack_userName = os.getenv('bstack_userName')
 bstack_accessKey = os.getenv('bstack_accessKey')
